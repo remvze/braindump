@@ -7,6 +7,7 @@ import { Container } from "../container";
 
 import styles from "./app.module.css";
 import { cn } from "@/helpers/styles";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 
 const PROMPTS = [
   "What’s bothering you most right now?",
@@ -27,8 +28,8 @@ interface Line {
 export function App() {
   const [promptIndex, setPromptIndex] = useState(0);
 
-  const [value, setValue] = useState("");
-  const [lines, setLines] = useState<Array<Line>>([]);
+  const [value, setValue] = useLocalStorage("braindump-value", "");
+  const [lines, setLines] = useLocalStorage<Array<Line>>("braindump-lines", []);
 
   const [sessionId, setSessionId] = useState(Date.now());
   const lastEntryTimeRef = useRef<number | null>(null);
