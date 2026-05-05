@@ -5,5 +5,5 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   integrations: [react(), sitemap()],
-  site: "https://remvze.com",
+  site: "https://braindump.run",
 });
