@@ -6,7 +6,7 @@
 
 ## What is Braindump?
 
-Braindump is a minimal space to quickly write down thoughts, ideas, and notes without extra complexity.
+Braindump is for moments when your head feels noisy and you need clarity fast. Write one thought at a time, keep your flow, and turn mental clutter into something you can move forward with. No pressure to organize, just get it out.
 
 ## Self-hosting
 
