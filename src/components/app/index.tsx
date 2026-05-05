@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Popover } from "@base-ui/react/popover";
 
 import { Container } from "../container";
 
@@ -36,6 +37,7 @@ export function App() {
 
   const [isTyping, setIsTyping] = useState(false);
   const [hasTyped, setHasTyped] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mounted = useRef(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -76,11 +78,105 @@ export function App() {
     }
   });
 
+  const linesAsText = lines.map((line) => line.text).join("\n");
+  const hasLines = lines.length > 0;
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const copyLines = async () => {
+    if (!hasLines) return;
+
+    try {
+      await navigator.clipboard.writeText(linesAsText);
+    } catch {
+      const temp = document.createElement("textarea");
+      temp.value = linesAsText;
+      temp.style.position = "fixed";
+      temp.style.opacity = "0";
+      document.body.appendChild(temp);
+      temp.focus();
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+    }
+
+    closeMenu();
+  };
+
+  const downloadLines = () => {
+    if (!hasLines) return;
+
+    const blob = new Blob([linesAsText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+
+    anchor.href = url;
+    anchor.download = `braindump-${stamp}.txt`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+
+    closeMenu();
+  };
+
+  const clearLines = () => {
+    setLines([]);
+    closeMenu();
+  };
+
   return (
     <>
       <div className={cn(styles.overlay, styles.top)} />
 
       <Container>
+        <div className={styles.toolbar}>
+          <h1>Braindump.</h1>
+          <Popover.Root open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <Popover.Trigger
+              className={styles.menuTrigger}
+              aria-label="Open menu"
+            >
+              Menu
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Positioner
+                align="center"
+                sideOffset={8}
+                className={styles.menuPositioner}
+              >
+                <Popover.Popup className={styles.menu}>
+                  <button
+                    type="button"
+                    className={styles.menuItem}
+                    onClick={copyLines}
+                    disabled={!hasLines}
+                  >
+                    Copy as text
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.menuItem}
+                    onClick={downloadLines}
+                    disabled={!hasLines}
+                  >
+                    Download .txt
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.menuItem}
+                    onClick={clearLines}
+                    disabled={!hasLines}
+                  >
+                    Clear lines
+                  </button>
+                </Popover.Popup>
+              </Popover.Positioner>
+            </Popover.Portal>
+          </Popover.Root>
+        </div>
+
         <section className={styles.lines}>
           {lines.map((line, i) => {
             const prev = lines[i - 1];

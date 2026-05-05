@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.6.0",
+    "@base-ui/react": "^1.4.1",
     "@fontsource-variable/libre-baskerville": "^5.2.1",
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
