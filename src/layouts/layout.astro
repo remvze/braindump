@@ -1,0 +1,57 @@
+---
+import "@/styles/global.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/400-italic.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/500-italic.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/400-italic.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/500-italic.css";
+
+import "@fontsource-variable/libre-baskerville/wght.css";
+
+interface Props {
+  description?: string;
+  og?: string;
+  title?: string;
+}
+
+const title = Astro.props.title
+  ? `${Astro.props.title} — Braindump`
+  : "Braindump: Write Down Your Thoughts";
+
+const description =
+  Astro.props.description || "A tool for brain dump. Nothing more.";
+
+const og = Astro.props.og || "/og.png";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width" name="viewport" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+    <meta content={Astro.generator} name="generator" />
+    <meta content="#09090b" name="theme-color" />
+
+    <title>{title}</title>
+    <meta content={title} name="title" />
+    <meta content={description} name="description" />
+
+    <meta content={title} property="og:title" />
+    <meta content={description} property="og:description" />
+    <meta content="Braindumo" property="og:site_name" />
+    <meta content="https://braindump.run/" property="og:url" />
+    <meta content="website" property="og:type" />
+    <meta content={`https://braindump.run${og}`} property="og:image" />
+
+    <meta content="summary_large_image" name="twitter:card" />
+
+    <link href="/sitemap-index.xml" rel="sitemap" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
