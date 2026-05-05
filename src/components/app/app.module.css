@@ -60,7 +60,8 @@
 .prompt {
   margin-top: 8px;
   color: var(--color-foreground-subtler);
-  font-family: serif;
+  font-family: var(--font-serif);
+  font-size: var(--font-sm);
   transition: 0.2s;
 }
 
