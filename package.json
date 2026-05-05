@@ -6,7 +6,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "release": "standard-version",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "changelog": "standard-version --skip.bump --skip.commit --skip.tag"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -24,5 +29,8 @@
     "react-hotkeys-hook": "^5.3.1",
     "react-icons": "^5.5.0",
     "react-textarea-autosize": "^8.5.9"
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
   }
 }

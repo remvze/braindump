@@ -1,0 +1,6 @@
+services:
+  braindump:
+    image: ghcr.io/remvze/braindump
+    restart: always
+    ports:
+      - "8080:8080"
